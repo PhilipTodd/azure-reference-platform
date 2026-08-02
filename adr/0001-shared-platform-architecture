@@ -1,0 +1,92 @@
+# ADR-0001: Shared Platform Architecture
+
+## Status
+
+Accepted
+
+## Date
+
+2026-07-31
+
+---
+
+## Context
+
+Multiple reference projects will be developed to demonstrate Azure architecture and software engineering practices.
+
+Each project requires common Azure infrastructure including monitoring, messaging, databases and hosting.
+
+Provisioning identical infrastructure independently for every project would:
+
+- increase deployment cost
+- duplicate infrastructure definitions
+- complicate maintenance
+- make cross-project demonstrations more difficult
+
+A shared platform provides a reusable foundation while allowing each application to remain independently deployable.
+
+---
+
+## Decision
+
+Create a dedicated Azure platform repository that provisions shared infrastructure for all reference projects.
+
+Platform resources include:
+
+- Resource Group
+- App Service Plan
+- Log Analytics Workspace
+- Application Insights
+- Azure SQL Logical Server
+- Shared SQL Database
+- Azure Cosmos DB Account
+- Azure Service Bus Namespace
+- Key Vault (future)
+- Shared networking (future)
+
+Individual applications remain responsible for deploying:
+
+- App Services
+- Function Apps
+- Azure Container Apps
+- Managed Identities
+- SQL schemas and migrations
+- Cosmos databases and containers
+- Service Bus queues, topics and subscriptions
+- RBAC configuration
+
+---
+
+## Consequences
+
+### Positive
+
+- Shared infrastructure reduces Azure costs.
+- Infrastructure is defined once.
+- Consistent monitoring across projects.
+- Applications remain independently deployable.
+- Platform can evolve independently of applications.
+
+### Negative
+
+- Platform must be deployed before applications.
+- Shared infrastructure introduces a dependency between repositories.
+
+---
+
+## Alternatives Considered
+
+### Fully isolated infrastructure per project
+
+Rejected due to duplicated infrastructure, higher cost and increased maintenance effort.
+
+### Single repository containing platform and applications
+
+Rejected because infrastructure lifecycle differs from application lifecycle and repositories should remain independently maintainable.
+
+---
+
+## Related Documents
+
+- docs/platform-architecture.md
+- ADR-0002 Infrastructure as Code

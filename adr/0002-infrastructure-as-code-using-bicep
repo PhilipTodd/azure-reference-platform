@@ -1,0 +1,91 @@
+# ADR-0002: Infrastructure as Code Using Bicep
+
+## Status
+
+Accepted
+
+## Date
+
+2026-07-31
+
+---
+
+## Context
+
+The Azure platform requires repeatable deployments that can be executed locally and from CI/CD pipelines.
+
+Several Infrastructure as Code technologies were considered including:
+
+- ARM Templates
+- Terraform
+- Pulumi
+- Azure Bicep
+
+The selected technology should:
+
+- integrate naturally with Azure
+- require minimal tooling
+- support modular deployments
+- remain easy for reviewers to understand
+
+---
+
+## Decision
+
+Use Azure Bicep for all infrastructure provisioning.
+
+The repository structure separates:
+
+- reusable modules
+- environment-specific parameters
+- deployment pipelines
+
+Deployments target the subscription scope and create Resource Groups where required.
+
+Each deployment follows the workflow:
+
+1. Build
+2. Validate
+3. What-If
+4. Deploy
+
+---
+
+## Consequences
+
+### Positive
+
+- Native Azure language.
+- Strong Azure documentation.
+- Simple modular design.
+- Excellent integration with Azure CLI and Azure DevOps.
+- Easy for interviewers and reviewers to understand.
+
+### Negative
+
+- Azure-specific technology.
+- Less portable than Terraform.
+
+These disadvantages are acceptable because the objective of the reference projects is to demonstrate Azure expertise.
+
+---
+
+## Alternatives Considered
+
+### Terraform
+
+Rejected because demonstrating deep Azure knowledge is a primary goal of the reference projects.
+
+### ARM Templates
+
+Rejected because Bicep provides equivalent functionality with significantly improved readability.
+
+### Pulumi
+
+Rejected due to additional language complexity and reduced alignment with Azure-first architecture.
+
+---
+
+## Related Documents
+
+- docs/deployment.md

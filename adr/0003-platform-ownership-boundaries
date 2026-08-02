@@ -1,0 +1,93 @@
+# ADR-0003: Platform Ownership Boundaries
+
+## Status
+
+Accepted
+
+## Date
+
+2026-07-31
+
+---
+
+## Context
+
+The Azure platform and application repositories evolve independently.
+
+Without clearly defined ownership boundaries, infrastructure responsibilities become ambiguous, resulting in duplicated resources or tightly coupled deployments.
+
+A consistent ownership model is required.
+
+---
+
+## Decision
+
+The Azure Reference Platform owns long-lived shared infrastructure.
+
+Applications own infrastructure specific to their business capability.
+
+### Platform-owned resources
+
+- Resource Groups
+- App Service Plans
+- Log Analytics
+- Application Insights
+- Azure SQL Logical Server
+- Shared SQL Database
+- Cosmos DB Account
+- Service Bus Namespace
+- Key Vault
+
+### Application-owned resources
+
+- App Services
+- Azure Functions
+- Azure Container Apps
+- Managed Identities
+- SQL schemas
+- SQL migrations
+- Cosmos databases
+- Cosmos containers
+- Service Bus queues
+- Service Bus topics
+- Service Bus subscriptions
+- RBAC assignments
+- Application configuration
+
+Applications may consume platform resources but must not modify or recreate them.
+
+---
+
+## Consequences
+
+### Positive
+
+- Clear separation of responsibilities.
+- Independent deployment pipelines.
+- Reduced infrastructure duplication.
+- Easier maintenance.
+- Reusable platform for multiple projects.
+
+### Negative
+
+- Applications depend on the platform existing before deployment.
+- Changes to shared infrastructure require coordination.
+
+---
+
+## Alternatives Considered
+
+### Applications own all infrastructure
+
+Rejected because this duplicates infrastructure across projects.
+
+### Platform owns everything
+
+Rejected because applications would no longer be independently deployable and deployment coupling would increase.
+
+---
+
+## Related Documents
+
+- ADR-0001 Shared Platform Architecture
+- docs/platform-architecture.md
