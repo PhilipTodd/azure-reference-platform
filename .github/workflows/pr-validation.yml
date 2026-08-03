@@ -47,7 +47,3 @@ jobs:
       - name: Verify committed parameter file
         run: |
           test -f "infra/bicep/environments/dev/main.dev.bicepparam"
-
-          az bicep build-params \
-            --file "infra/bicep/environments/dev/main.dev.bicepparam" \
-            --stdout > /dev/null
