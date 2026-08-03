@@ -17,7 +17,7 @@ param logAnalyticsLocation = platformLocation
 param applicationInsightsName = 'appi-platform-dev'
 param applicationInsightsLocation = platformLocation
 
-param sqlServerName = 'sb-adt-platform-dev'
+param sqlServerName = 'sql-adt-platform-dev'
 param sqlAdministratorLogin = 'sqladmin'
 param sqlAdministratorPassword = readEnvironmentVariable('SQL_ADMINISTRATOR_PASSWORD')
 param sqlDatabaseName = 'ReferenceProjectsDb'
