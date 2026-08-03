@@ -1,0 +1,99 @@
+name: Deploy Platform - Dev
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: azure-reference-platform-dev
+  cancel-in-progress: false
+
+env:
+  TEMPLATE_FILE: infra/bicep/main.bicep
+  PARAMETER_FILE: infra/bicep/environments/dev/main.dev.bicepparam
+  DEPLOYMENT_LOCATION: australiaeast
+
+jobs:
+  validate-and-deploy:
+    name: Validate and deploy
+    runs-on: ubuntu-latest
+
+    environment: development
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sign in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Install Bicep CLI
+        run: az bicep install
+
+      - name: Show deployment context
+        run: |
+          az account show \
+            --query "{subscription:name, subscriptionId:id, tenantId:tenantId}" \
+            --output table
+
+          echo "Template: $TEMPLATE_FILE"
+          echo "Parameters: $PARAMETER_FILE"
+          echo "Deployment location: $DEPLOYMENT_LOCATION"
+
+      - name: Build Bicep
+        run: |
+          az bicep build \
+            --file "$TEMPLATE_FILE"
+
+      - name: Validate deployment
+        env:
+          SQL_ADMINISTRATOR_PASSWORD: ${{ secrets.SQL_ADMINISTRATOR_PASSWORD }}
+        run: |
+          az deployment sub validate \
+            --name "platform-dev-validate-${{ github.run_number }}" \
+            --location "$DEPLOYMENT_LOCATION" \
+            --template-file "$TEMPLATE_FILE" \
+            --parameters "$PARAMETER_FILE"
+
+      - name: Preview deployment
+        env:
+          SQL_ADMINISTRATOR_PASSWORD: ${{ secrets.SQL_ADMINISTRATOR_PASSWORD }}
+        run: |
+          az deployment sub what-if \
+            --name "platform-dev-whatif-${{ github.run_number }}" \
+            --location "$DEPLOYMENT_LOCATION" \
+            --template-file "$TEMPLATE_FILE" \
+            --parameters "$PARAMETER_FILE" \
+            --result-format FullResourcePayloads
+
+      - name: Deploy platform
+        env:
+          SQL_ADMINISTRATOR_PASSWORD: ${{ secrets.SQL_ADMINISTRATOR_PASSWORD }}
+        run: |
+          deployment_name="platform-dev-${{ github.run_number }}-${{ github.run_attempt }}"
+
+          az deployment sub create \
+            --name "$deployment_name" \
+            --location "$DEPLOYMENT_LOCATION" \
+            --template-file "$TEMPLATE_FILE" \
+            --parameters "$PARAMETER_FILE" \
+            --output json
+
+      - name: Verify deployment
+        run: |
+          az group show \
+            --name "rg-platform-dev" \
+            --query "{name:name, location:location, state:properties.provisioningState}" \
+            --output table
+
+          az resource list \
+            --resource-group "rg-platform-dev" \
+            --query "[].{name:name, type:type, location:location}" \
+            --output table
