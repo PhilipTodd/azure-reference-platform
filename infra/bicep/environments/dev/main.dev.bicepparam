@@ -19,7 +19,7 @@ param applicationInsightsLocation = platformLocation
 
 param sqlServerName = 'sb-adt-platform-dev'
 param sqlAdministratorLogin = 'sqladmin'
-param sqlAdministratorPassword = readEnvironmentVariable('AZURE_SQL_ADMIN_PASSWORD')
+param sqlAdministratorPassword = readEnvironmentVariable('SQL_ADMINISTRATOR_PASSWORD')
 param sqlDatabaseName = 'ReferenceProjectsDb'
 param sqlDatabaseSkuName = 'Basic'
 param sqlDatabaseSkuTier = 'Basic'
