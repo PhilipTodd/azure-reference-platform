@@ -4,7 +4,7 @@ Shared Azure infrastructure used by the Aus Data Tech reference projects.
 
 This repository provisions and manages the common Azure platform resources used by multiple reference applications. The goal is to demonstrate production-style Infrastructure as Code (IaC) while keeping Azure hosting costs low by sharing platform services across projects.
 
-The platform is deployed using Azure Bicep and Azure DevOps pipelines.
+The platform is deployed using Azure Bicep and Github Actions.
 
 ---
 
@@ -86,7 +86,7 @@ This separation allows each application to evolve independently while sharing co
 
 - Azure Resource Manager (ARM)
 - Azure Bicep
-- Azure DevOps Pipelines
+- Github Actions
 - Azure App Service
 - Azure SQL Database
 - Azure Cosmos DB
@@ -99,7 +99,7 @@ This separation allows each application to evolve independently while sharing co
 
 ## Deployment
 
-The platform is deployed using Azure DevOps.
+The platform is deployed using Github Actions.
 
 Typical deployment stages are:
 
@@ -133,11 +133,11 @@ infra/
 │   ├── environments/
 │   └── main.bicep
 │
-├── pipelines/
-│   └── deploy-platform-dev.yml
-│
 docs/
 scripts/
+.github
+├── workflows/
+│   └── deploy-platform-dev.yml
 ```
 
 ---

@@ -9,7 +9,7 @@ Its goals are to:
 - reduce Azure hosting costs;
 - centralise common platform services;
 - keep application deployments independent;
-- demonstrate Infrastructure as Code using Bicep and Azure DevOps.
+- demonstrate Infrastructure as Code using Bicep and Github Actions.
 
 ## Resource Groups
 
