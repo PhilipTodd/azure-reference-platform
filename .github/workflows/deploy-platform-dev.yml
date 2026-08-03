@@ -8,20 +8,28 @@ permissions:
   contents: read
 
 concurrency:
-  group: azure-reference-platform-dev
+  group: azure-reference-platform-development
   cancel-in-progress: false
 
 env:
   TEMPLATE_FILE: infra/bicep/main.bicep
   PARAMETER_FILE: infra/bicep/environments/dev/main.dev.bicepparam
-  DEPLOYMENT_LOCATION: australiaeast
+  RESOURCE_GROUP_NAME: rg-platform-dev
 
 jobs:
   validate-and-deploy:
     name: Validate and deploy
     runs-on: ubuntu-latest
 
-    environment: development
+    # Defence in depth in addition to the GitHub Environment branch rule.
+    if: github.ref == 'refs/heads/main'
+
+    environment:
+      name: development
+
+    env:
+      DEPLOYMENT_LOCATION: ${{ vars.AZURE_LOCATION }}
+      SQL_ADMINISTRATOR_PASSWORD: ${{ secrets.SQL_ADMINISTRATOR_PASSWORD }}
 
     steps:
       - name: Checkout repository
@@ -43,57 +51,82 @@ jobs:
             --query "{subscription:name, subscriptionId:id, tenantId:tenantId}" \
             --output table
 
+          echo "Git reference: $GITHUB_REF"
           echo "Template: $TEMPLATE_FILE"
           echo "Parameters: $PARAMETER_FILE"
           echo "Deployment location: $DEPLOYMENT_LOCATION"
 
-      - name: Build Bicep
+      - name: Build and lint Bicep
         run: |
           az bicep build \
-            --file "$TEMPLATE_FILE"
+            --file "$TEMPLATE_FILE" \
+            --stdout > /dev/null
 
-      - name: Validate deployment
-        env:
-          SQL_ADMINISTRATOR_PASSWORD: ${{ secrets.SQL_ADMINISTRATOR_PASSWORD }}
+          az bicep build-params \
+            --file "$PARAMETER_FILE" \
+            --stdout > /dev/null
+
+      - name: Validate subscription deployment
         run: |
           az deployment sub validate \
-            --name "platform-dev-validate-${{ github.run_number }}" \
-            --location "$DEPLOYMENT_LOCATION" \
-            --template-file "$TEMPLATE_FILE" \
-            --parameters "$PARAMETER_FILE"
-
-      - name: Preview deployment
-        env:
-          SQL_ADMINISTRATOR_PASSWORD: ${{ secrets.SQL_ADMINISTRATOR_PASSWORD }}
-        run: |
-          az deployment sub what-if \
-            --name "platform-dev-whatif-${{ github.run_number }}" \
+            --name "platform-dev-validate-${{ github.run_number }}-${{ github.run_attempt }}" \
             --location "$DEPLOYMENT_LOCATION" \
             --template-file "$TEMPLATE_FILE" \
             --parameters "$PARAMETER_FILE" \
-            --result-format FullResourcePayloads
+            --output none
+
+      - name: Preview deployment
+        run: |
+          az deployment sub what-if \
+            --name "platform-dev-whatif-${{ github.run_number }}-${{ github.run_attempt }}" \
+            --location "$DEPLOYMENT_LOCATION" \
+            --template-file "$TEMPLATE_FILE" \
+            --parameters "$PARAMETER_FILE" \
+            --result-format ResourceIdOnly
 
       - name: Deploy platform
-        env:
-          SQL_ADMINISTRATOR_PASSWORD: ${{ secrets.SQL_ADMINISTRATOR_PASSWORD }}
+        id: deploy
         run: |
           deployment_name="platform-dev-${{ github.run_number }}-${{ github.run_attempt }}"
+
+          echo "deployment_name=$deployment_name" >> "$GITHUB_OUTPUT"
 
           az deployment sub create \
             --name "$deployment_name" \
             --location "$DEPLOYMENT_LOCATION" \
             --template-file "$TEMPLATE_FILE" \
             --parameters "$PARAMETER_FILE" \
-            --output json
+            --output none
 
-      - name: Verify deployment
+      - name: Show deployment result
         run: |
-          az group show \
-            --name "rg-platform-dev" \
-            --query "{name:name, location:location, state:properties.provisioningState}" \
+          az deployment sub show \
+            --name "${{ steps.deploy.outputs.deployment_name }}" \
+            --query "{
+              name:name,
+              state:properties.provisioningState,
+              timestamp:properties.timestamp
+            }" \
             --output table
 
+      - name: Verify platform resource group
+        run: |
+          az group show \
+            --name "$RESOURCE_GROUP_NAME" \
+            --query "{
+              name:name,
+              location:location,
+              state:properties.provisioningState
+            }" \
+            --output table
+
+      - name: List deployed resources
+        run: |
           az resource list \
-            --resource-group "rg-platform-dev" \
-            --query "[].{name:name, type:type, location:location}" \
+            --resource-group "$RESOURCE_GROUP_NAME" \
+            --query "[].{
+              name:name,
+              type:type,
+              location:location
+            }" \
             --output table
