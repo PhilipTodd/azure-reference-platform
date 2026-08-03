@@ -1,7 +1,11 @@
-name: Validate Platform Bicep
+name: Validate Infrastructure
 
 on:
   pull_request:
+    branches:
+      - main
+
+  push:
     branches:
       - main
     paths:
