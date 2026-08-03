@@ -1,0 +1,49 @@
+name: Validate Platform Bicep
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'infra/bicep/**'
+      - '.github/workflows/pr-validation.yml'
+      - '.github/workflows/deploy-platform-dev.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: platform-pr-validation-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  TEMPLATE_FILE: infra/bicep/main.bicep
+
+jobs:
+  validate-bicep:
+    name: Build and lint Bicep
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Bicep CLI
+        run: az bicep install
+
+      - name: Show Bicep version
+        run: az bicep version
+
+      - name: Build and lint Bicep
+        run: |
+          az bicep build \
+            --file "$TEMPLATE_FILE" \
+            --stdout > /dev/null
+
+      - name: Verify committed parameter file
+        run: |
+          test -f "infra/bicep/environments/dev/main.dev.bicepparam"
+
+          az bicep build-params \
+            --file "infra/bicep/environments/dev/main.dev.bicepparam" \
+            --stdout > /dev/null
