@@ -34,6 +34,10 @@ param sqlDatabaseSkuTier = 'Basic'
 param sqlDatabaseMaxSizeBytes = 2147483648
 param sqlLocation = platformLocation
 
+// Verified directory bootstrap group ID; no secret values.
+param sqlEntraAdminGroupName = 'sg-adt-platform-sql-admins-dev'
+param sqlEntraAdminGroupObjectId = '469d4226-c4a4-4cc1-8b99-58e1dfd595f7'
+
 param cosmosAccountName = 'cosmos-adt-platform-dev'
 param cosmosDatabaseName = 'ReferenceProjects'
 param cosmosConsistencyLevel = 'Session'

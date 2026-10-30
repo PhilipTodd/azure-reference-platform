@@ -65,6 +65,11 @@ param sqlAdministratorPassword string
 @description('Azure SQL location.')
 param sqlLocation string
 
+@description('Entra SQL administrator group object ID. Empty leaves the existing administrator unmanaged; it does not remove one.')
+param sqlEntraAdminGroupObjectId string = ''
+@description('Verified display name of the dedicated Entra SQL administrator group.')
+param sqlEntraAdminGroupName string = 'sg-adt-platform-sql-admins-${environment}'
+
 // Azure SQL DB
 @description('Name of the shared Azure SQL database.')
 param sqlDatabaseName string
@@ -172,6 +177,8 @@ module sqlServer 'modules/sql-server.bicep' = {
     location: sqlLocation
     administratorLogin: sqlAdministratorLogin
     administratorPassword: sqlAdministratorPassword
+    entraAdminGroupObjectId: sqlEntraAdminGroupObjectId
+    entraAdminGroupName: sqlEntraAdminGroupName
     tags: tags
   }
 }
@@ -268,6 +275,7 @@ output applicationInsightsConnectionString string = applicationInsights.outputs.
 output sqlServerName string = sqlServer.outputs.serverName
 output sqlServerId string = sqlServer.outputs.serverId
 output sqlServerFqdn string = sqlServer.outputs.fullyQualifiedDomainName
+output sqlEntraAdminGroupObjectId string = sqlEntraAdminGroupObjectId
 output sqlDatabaseId string = sqlDatabase.outputs.databaseId
 output sqlDatabaseName string = sqlDatabase.outputs.databaseName
 
