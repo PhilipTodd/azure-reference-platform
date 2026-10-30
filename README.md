@@ -1,5 +1,7 @@
 # Azure Reference Platform
 
+The [Development APIM/ACR additions](docs/development-foundations.md) extend the existing main.bicep entry point, local main.dev.local.bicepparam and committed GitHub Development parameters. They were [deployed successfully on 30 October 2026](docs/deployment-2026-10-30.md) after explicit approval of existing-resource updates. B1 and verified shared settings/app states were retained. Application access and later dependencies remain separate readiness tasks.
+
 Shared Azure infrastructure used by the Aus Data Tech reference projects.
 
 This repository provisions and manages the common Azure platform resources used by multiple reference applications. The goal is to demonstrate production-style Infrastructure as Code (IaC) while keeping Azure hosting costs low by sharing platform services across projects.

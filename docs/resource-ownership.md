@@ -33,6 +33,12 @@ The `mining-event-sourcing-reference` repository owns:
 
 ## Distributed Systems Project
 
+### Parameter Pilot Development refinement
+
+The current accepted Parameter Pilot boundaries supersede the historical Orders/Catalog/Payments examples below for that application. Its application group is `rg-parameterpilot-dev`; Aquarium owns the Aquarium schema in shared ReferenceProjectsDb, and Tracking owns approved containers in shared ReferenceProjects. APIs/workers retain separate identities. PostgreSQL server/capacity remains platform-owned for the later Advisor stage; Advisor owns its database/content.
+
+The platform owns shared APIM/ACR service lifecycle; Parameter Pilot owns approved API definitions/policies, image content and scoped application grants. The [APIM/ACR additions](development-foundations.md) were [deployed on 30 October](deployment-2026-10-30.md). Per-service configuration/vault instances remain a separate pending architectural decision. This clarification does not reassign resources or permissions belonging to the Event Sourcing/Ticketing projects.
+
 The `azure-distributed-systems-reference` repository owns:
 
 - `rg-distributed-systems-dev`;

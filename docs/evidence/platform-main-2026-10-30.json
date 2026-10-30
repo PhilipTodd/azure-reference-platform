@@ -1,0 +1,124 @@
+{
+  "observedDate": "2026-10-30",
+  "status": "integrated-main-draft-not-deployed",
+  "entryPoint": "infra/bicep/main.bicep",
+  "cloudValidationParameters": "infra/bicep/environments/dev/main.dev.local.bicepparam (values not stored)",
+  "bicepVersion": "0.47.16 (3f73e1a234)",
+  "validationState": "Succeeded",
+  "whatIf": {
+    "changes": [
+      {
+        "changeType": "NoChange",
+        "deltaPaths": [],
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev"
+      },
+      {
+        "changeType": "Create",
+        "deltaPaths": null,
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.ApiManagement/service/apim-adt-platform-dev"
+      },
+      {
+        "changeType": "Create",
+        "deltaPaths": null,
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.ApiManagement/service/apim-adt-platform-dev/policies/policy"
+      },
+      {
+        "changeType": "Create",
+        "deltaPaths": null,
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.ContainerRegistry/registries/acradtplatformdev"
+      },
+      {
+        "changeType": "Modify",
+        "deltaPaths": [
+          "properties.analyticalStorageConfiguration",
+          "properties.defaultIdentity",
+          "properties.defaultPriorityLevel",
+          "properties.enablePerRegionPerPartitionAutoscale",
+          "properties.enablePriorityBasedExecution",
+          "properties.perPartitionAutomaticFailoverEnabled",
+          "properties.sqlEndpoint"
+        ],
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-adt-platform-dev"
+      },
+      {
+        "changeType": "Modify",
+        "deltaPaths": [
+          "properties.options",
+          "location",
+          "tags"
+        ],
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-adt-platform-dev/sqlDatabases/ReferenceProjects"
+      },
+      {
+        "changeType": "Modify",
+        "deltaPaths": [
+          "properties.Flow_Type",
+          "properties.Request_Source"
+        ],
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Insights/components/appi-platform-dev"
+      },
+      {
+        "changeType": "NoChange",
+        "deltaPaths": [
+          "properties.features"
+        ],
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.OperationalInsights/workspaces/log-platform-dev"
+      },
+      {
+        "changeType": "NoChange",
+        "deltaPaths": [
+          "sku.tier"
+        ],
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.ServiceBus/namespaces/sb-adt-platform-dev"
+      },
+      {
+        "changeType": "NoChange",
+        "deltaPaths": [
+          "properties.version"
+        ],
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Sql/servers/sql-adt-platform-dev"
+      },
+      {
+        "changeType": "Ignore",
+        "deltaPaths": null,
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Sql/servers/sql-adt-platform-dev/databases/master"
+      },
+      {
+        "changeType": "NoChange",
+        "deltaPaths": [
+          "sku.tier"
+        ],
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Sql/servers/sql-adt-platform-dev/databases/ReferenceProjectsDb"
+      },
+      {
+        "changeType": "NoChange",
+        "deltaPaths": [
+          "sku.size",
+          "sku.tier"
+        ],
+        "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Web/serverfarms/asp-platform-dev"
+      }
+    ],
+    "errorCode": null,
+    "status": "Succeeded"
+  },
+  "baselineComparison": "All three existing-resource Modify entries also occur in the unmodified core baseline; exact prior compiled resource/module declarations, parameter definitions and outputs unchanged. Deltas still need review before deployment.",
+  "compiledTemplateSha256": "1bc0e4205145b026f94950e487c36099817b9e932f7fc9a14201bfb5013b6009",
+  "sourceSha256": {
+    "infra/bicep/main.bicep": "2117ad3806962c17bff703e48db638e3fd44e81307793d3906457aed826a2ab4",
+    "infra/bicep/environments/dev/main.dev.bicepparam": "dac1fd2ffa16d58c2a0480a75d8b7876f45c60d3a9248c7487c333abc75a898f",
+    "infra/bicep/modules/api-management.bicep": "4efeda9115d97c8ab05747bc663d520bfa33df924a27147e7cca0397068e8edc",
+    "infra/bicep/modules/container-registry.bicep": "a7fd53a68c71c6483aa4d9f9f64b0ad9a504fd82e677aa01427c2102d5ce4e89",
+    "scripts/verify-foundations.py": "5a30cf654d41741ec714487070116670dcf45de373c12d35914b9f1bdefe51d7",
+    ".github/workflows/pr-validation.yml": "edd29b234e1b2ece271d3f17b5f5635344890ba94ed0aee3f9e2415135789185",
+    ".github/workflows/deploy-platform-dev.yml": "c2db97e9c7898832543e240ca20c6820e343294d09012767de24e6a726493ce6"
+  },
+  "localParameterProtection": "Existing overrides preserved; local values not displayed or stored in evidence; temporary compiled local/baseline parameter files deleted.",
+  "verification": [
+    "Main, committed and actual local parameter compilation passed",
+    "Development B1 and platform APIM/ACR controls passed",
+    "Four negative controls passed",
+    "Azure subscription validation and what-if passed",
+    "No resource deployment, merge, push or pull request performed"
+  ]
+}

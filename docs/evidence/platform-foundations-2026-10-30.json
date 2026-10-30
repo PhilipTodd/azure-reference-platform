@@ -1,0 +1,78 @@
+{
+  "observedDate": "2026-10-30",
+  "status": "superseded-historical-separate-entry-point-not-deployed",
+  "subscriptionId": "9671ac36-9800-451a-b283-35ea87f8b419",
+  "resourceGroup": "rg-platform-dev",
+  "bicepVersion": "0.47.16 (3f73e1a234)",
+  "validationState": "Succeeded",
+  "whatIfState": "Succeeded",
+  "compiledTemplateSha256": "0e510ce10aa9a723564521b525456382527c92b56e74ca275ef7d4686c295377",
+  "compiledParametersSha256": "76b66743fb5ec7c970211c0df2284a1befa494de05573885557cdd3b20ff4dc3",
+  "sourceSha256": {
+    "infra/bicep/platform-foundations.bicep": "172654f14d793e4fcc3f50211350344b93606108df662985b47c6b8f8a8acd1e",
+    "infra/bicep/modules/api-management.bicep": "4efeda9115d97c8ab05747bc663d520bfa33df924a27147e7cca0397068e8edc",
+    "infra/bicep/modules/container-registry.bicep": "a7fd53a68c71c6483aa4d9f9f64b0ad9a504fd82e677aa01427c2102d5ce4e89",
+    "infra/bicep/environments/dev/foundations.dev.bicepparam": "9587cd556be39ad5e06ba441b4246d6916d604e36d10d9bea9b47ec00e6d77c3"
+  },
+  "changes": [
+    {
+      "changeType": "Create",
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.ApiManagement/service/apim-adt-platform-dev"
+    },
+    {
+      "changeType": "Create",
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.ApiManagement/service/apim-adt-platform-dev/policies/policy"
+    },
+    {
+      "changeType": "Create",
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.ContainerRegistry/registries/acradtplatformdev"
+    },
+    {
+      "changeType": "Ignore",
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-adt-platform-dev"
+    },
+    {
+      "changeType": "Ignore",
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Insights/components/appi-platform-dev"
+    },
+    {
+      "changeType": "Ignore",
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.OperationalInsights/workspaces/log-platform-dev"
+    },
+    {
+      "changeType": "Ignore",
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.ServiceBus/namespaces/sb-adt-platform-dev"
+    },
+    {
+      "changeType": "Ignore",
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Sql/servers/sql-adt-platform-dev"
+    },
+    {
+      "changeType": "Ignore",
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Sql/servers/sql-adt-platform-dev/databases/master"
+    },
+    {
+      "changeType": "Ignore",
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Sql/servers/sql-adt-platform-dev/databases/ReferenceProjectsDb"
+    },
+    {
+      "changeType": "Ignore",
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Web/serverFarms/asp-platform-dev"
+    }
+  ],
+  "verification": [
+    "Bicep and parameters compile without diagnostics",
+    "APIM/ACR names available at query time",
+    "Both providers registered",
+    "Compiled resource-boundary/security check passed",
+    "Four negative boundary/security checks passed"
+  ],
+  "notVerified": [
+    "Resource creation",
+    "Effective addressing and direct-call denial",
+    "Actual image push/pull and repository grants",
+    "Post-deployment costs",
+    "Remote GitHub Actions execution"
+  ],
+  "supersededBy": "platform-main-2026-10-30.json"
+}

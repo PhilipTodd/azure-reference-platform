@@ -1,0 +1,232 @@
+{
+  "observedDate": "2026-10-30",
+  "status": "deployment-succeeded-and-infrastructure-checks-passed",
+  "deployment": {
+    "correlationId": "68290fd5-2ad9-4bd1-9c5c-d88446ee0074",
+    "duration": "PT26M50.8356496S",
+    "error": null,
+    "name": "platform-dev-20261030-apim-acr-020536",
+    "state": "Succeeded",
+    "templateHash": "12008029426972160106",
+    "timestamp": "2026-10-30T02:32:31.846990+00:00"
+  },
+  "entryPoint": "infra/bicep/main.bicep",
+  "parameterSource": "infra/bicep/environments/dev/main.dev.local.bicepparam; secret values not stored",
+  "explicitApproval": "Owner approved the full deployment including the three reviewed existing Cosmos/Insights updates.",
+  "apim": {
+    "gatewayUrl": "https://apim-adt-platform-dev.azure-api.net",
+    "id": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.ApiManagement/service/apim-adt-platform-dev",
+    "identity": {
+      "principalId": "aff263e4-457b-459a-9638-ae5f327b96b5",
+      "tenantId": "f4fcd45c-104f-4dd3-b7bf-3475e83ce097",
+      "type": "SystemAssigned",
+      "userAssignedIdentities": null
+    },
+    "location": "Australia East",
+    "name": "apim-adt-platform-dev",
+    "publicIpAddresses": [
+      "4.254.91.56"
+    ],
+    "publicNetworkAccess": "Enabled",
+    "publisherEmail": "philip.todd@ausdatatech.com.au",
+    "publisherName": "Aus Data Tech",
+    "sku": {
+      "capacity": 1,
+      "family": null,
+      "model": null,
+      "name": "Developer",
+      "size": null,
+      "tier": null
+    },
+    "state": "Succeeded",
+    "tls": {
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2": "False",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30": "false",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10": "false",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11": "false",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168": "False",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30": "false",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10": "false",
+      "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11": "false"
+    },
+    "virtualNetworkType": "None"
+  },
+  "gatewayChecks": {
+    "configurationChecks": "Passed",
+    "bootstrapStatusConfigured": 503,
+    "apiCount": 1,
+    "rootHttpStatus": 404,
+    "rootCheckScope": "Unconfigured-route rejection; no application route/JWT or backend-ingress proof claimed.",
+    "providerSampleChecks": [
+      {
+        "api": "echo-api",
+        "source": "Azure-provided Echo sample, not a Parameter Pilot route",
+        "unauthenticatedHttpStatus": 401
+      }
+    ]
+  },
+  "registry": {
+    "adminUserEnabled": false,
+    "anonymousPullEnabled": false,
+    "id": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.ContainerRegistry/registries/acradtplatformdev",
+    "loginServer": "acradtplatformdev.azurecr.io",
+    "name": "acradtplatformdev",
+    "roleAssignmentMode": "AbacRepositoryPermissions",
+    "sku": "Basic",
+    "state": "Succeeded"
+  },
+  "registryHttpCheck": {
+    "url": "https://acradtplatformdev.azurecr.io/v2/",
+    "anonymousStatus": 401,
+    "expectedStatus": 401
+  },
+  "sharedResourcePostSnapshot": {
+    "plan": {
+      "id": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Web/serverfarms/asp-platform-dev",
+      "kind": "linux",
+      "reserved": true,
+      "sku": {
+        "capacity": 1,
+        "family": "B",
+        "model": null,
+        "name": "B1",
+        "size": "B1",
+        "tier": "Basic"
+      },
+      "status": "Ready"
+    },
+    "webApps": [
+      {
+        "defaultHostName": "api-adt-ticketing-dev.azurewebsites.net",
+        "name": "api-adt-ticketing-dev",
+        "resourceGroup": "rg-ticketing-dev",
+        "serverFarmId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Web/serverfarms/asp-platform-dev",
+        "state": "Running"
+      },
+      {
+        "defaultHostName": "api-adt-blastplanning-dev.azurewebsites.net",
+        "name": "api-adt-blastplanning-dev",
+        "resourceGroup": "rg-event-sourcing-dev",
+        "serverFarmId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Web/serverfarms/asp-platform-dev",
+        "state": "Running"
+      },
+      {
+        "defaultHostName": "web-adt-blastplanning-dev.azurewebsites.net",
+        "name": "web-adt-blastplanning-dev",
+        "resourceGroup": "rg-event-sourcing-dev",
+        "serverFarmId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Web/serverfarms/asp-platform-dev",
+        "state": "Running"
+      }
+    ],
+    "functionApps": {
+      "name": "func-adt-blastplanning-dev",
+      "resourceGroup": "rg-event-sourcing-dev",
+      "serverFarmId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Web/serverfarms/asp-platform-dev",
+      "state": "Running"
+    },
+    "sql": {
+      "id": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Sql/servers/sql-adt-platform-dev/databases/ReferenceProjectsDb",
+      "maxSizeBytes": 2147483648,
+      "sku": {
+        "capacity": 5,
+        "family": null,
+        "name": "Basic",
+        "size": null,
+        "tier": "Basic"
+      },
+      "status": "Online"
+    },
+    "cosmos": {
+      "consistency": "Session",
+      "disableLocalAuth": false,
+      "freeTier": true,
+      "id": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-adt-platform-dev",
+      "locations": [
+        "Australia East"
+      ],
+      "provisioningState": "Succeeded",
+      "publicNetworkAccess": "Enabled"
+    },
+    "cosmosThroughput": {
+      "autoscale": null,
+      "throughput": 400
+    }
+  },
+  "cosmosAccountFieldComparison": {
+    "before": {
+      "analyticalStorageConfiguration": {
+        "schemaType": "WellDefined"
+      },
+      "defaultIdentity": "FirstPartyIdentity",
+      "defaultPriorityLevel": "High",
+      "enablePerRegionPerPartitionAutoscale": true,
+      "enablePriorityBasedExecution": false,
+      "perPartitionAutomaticFailoverEnabled": false,
+      "sqlEndpoint": "https://cosmos-adt-platform-dev.documents.azure.com:443/"
+    },
+    "after": {
+      "analyticalStorageConfiguration": {
+        "schemaType": "WellDefined"
+      },
+      "defaultIdentity": "FirstPartyIdentity",
+      "defaultPriorityLevel": "High",
+      "enablePerRegionPerPartitionAutoscale": true,
+      "enablePriorityBasedExecution": false,
+      "perPartitionAutomaticFailoverEnabled": false,
+      "sqlEndpoint": "https://cosmos-adt-platform-dev.documents.azure.com:443/"
+    },
+    "result": "Exact match"
+  },
+  "sharedStateComparison": "Final selected plan/SQL/Cosmos/400 RU/app state snapshots match pre-deployment.",
+  "existingHttpChecks": [
+    {
+      "name": "api-adt-ticketing-dev",
+      "rootStatus": 404,
+      "scope": "HTTP reachability only; not an application journey test"
+    },
+    {
+      "name": "api-adt-blastplanning-dev",
+      "rootStatus": 404,
+      "scope": "HTTP reachability only; not an application journey test"
+    },
+    {
+      "name": "web-adt-blastplanning-dev",
+      "rootStatus": 200,
+      "scope": "HTTP reachability only; not an application journey test"
+    }
+  ],
+  "diagnosticRetention": [
+    {
+      "name": "AppDependencies",
+      "retentionInDays": 90,
+      "totalRetentionInDays": 90
+    },
+    {
+      "name": "AppExceptions",
+      "retentionInDays": 90,
+      "totalRetentionInDays": 90
+    },
+    {
+      "name": "AppRequests",
+      "retentionInDays": 90,
+      "totalRetentionInDays": 90
+    },
+    {
+      "name": "AppTraces",
+      "retentionInDays": 90,
+      "totalRetentionInDays": 90
+    }
+  ],
+  "limitations": [
+    "No Parameter Pilot API routes or workloads deployed",
+    "No application JWT/OBO, backend ingress or owner-isolation journey proof",
+    "No image push/pull or per-repository workload grants tested",
+    "HTTP checks are reachability/unauthenticated rejection only, not business journey tests",
+    "Actual bill and later capacity remain unproven; this does not complete Stage 1"
+  ],
+  "gitActivity": "Read-only status/branch/diff checks; no new branch, commit, merge, push or pull request.",
+  "collectionNotes": [
+    "A single-Function snapshot was normalised from an object to an array before comparison.",
+    "APIM policy GET returned BOM-prefixed XML; retrieved to file and parsed as XML after the CLI JSON/encoding attempt failed. Neither issue required an Azure mutation."
+  ]
+}
