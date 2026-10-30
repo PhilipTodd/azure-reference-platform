@@ -2,6 +2,14 @@ using '../../main.bicep'
 
 param platformLocation = 'australiaeast'
 
+// Shared gateway and image hosting.
+param apiManagementName = 'apim-adt-platform-dev'
+param apiManagementLocation = platformLocation
+param apiManagementPublisherEmail = 'philip.todd@ausdatatech.com.au'
+param apiManagementPublisherName = 'Aus Data Tech'
+param containerRegistryName = 'acradtplatformdev'
+param containerRegistryLocation = platformLocation
+
 param environment = 'dev'
 
 param platformResourceGroupName = 'rg-platform-dev'

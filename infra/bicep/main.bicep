@@ -14,6 +14,20 @@ param environment string = 'dev'
 @description('Globally unique prefix for shared platform resources.')
 param globalNamePrefix string = 'adt'
 
+// Shared gateway and image hosting, managed through this platform entry point.
+@description('Shared classic APIM Developer service name.')
+param apiManagementName string = 'apim-${globalNamePrefix}-platform-${environment}'
+@description('APIM deployment region.')
+param apiManagementLocation string = platformLocation
+@description('Owner-approved APIM publisher contact; not a secret.')
+param apiManagementPublisherEmail string
+@description('APIM publisher display name.')
+param apiManagementPublisherName string = 'Aus Data Tech'
+@description('Globally unique shared ACR Basic name.')
+param containerRegistryName string = 'acr${globalNamePrefix}platform${environment}'
+@description('Container registry deployment region.')
+param containerRegistryLocation string = platformLocation
+
 @description('Platform resource group name.')
 param platformResourceGroupName string = 'rg-platform-${environment}'
 
@@ -216,6 +230,28 @@ module serviceBusNamespace 'modules/service-bus-namespace.bicep' = {
 }
 // End sub-modules
 
+module apiManagement 'modules/api-management.bicep' = {
+  name: 'platform-api-management'
+  scope: platformResourceGroup
+  params: {
+    serviceName: apiManagementName
+    location: apiManagementLocation
+    publisherEmail: apiManagementPublisherEmail
+    publisherName: apiManagementPublisherName
+    tags: tags
+  }
+}
+
+module containerRegistry 'modules/container-registry.bicep' = {
+  name: 'platform-container-registry'
+  scope: platformResourceGroup
+  params: {
+    registryName: containerRegistryName
+    location: containerRegistryLocation
+    tags: tags
+  }
+}
+
 // Output values from sub-modules
 output resourceGroupName string = platformResourceGroup.name
 
@@ -242,3 +278,12 @@ output cosmosEndpoint string = cosmosAccount.outputs.documentEndpoint
 output serviceBusNamespaceId string = serviceBusNamespace.outputs.namespaceId
 output serviceBusNamespaceName string = serviceBusNamespace.outputs.namespaceName
 output serviceBusEndpoint string = serviceBusNamespace.outputs.serviceBusEndpoint
+
+output apiManagementId string = apiManagement.outputs.serviceId
+output apiManagementName string = apiManagement.outputs.serviceName
+output apiManagementGatewayUrl string = apiManagement.outputs.gatewayUrl
+output apiManagementPublicIpAddresses array = apiManagement.outputs.publicIpAddresses
+output apiManagementPrincipalId string = apiManagement.outputs.principalId
+output containerRegistryId string = containerRegistry.outputs.registryId
+output containerRegistryName string = containerRegistry.outputs.registryName
+output containerRegistryLoginServer string = containerRegistry.outputs.loginServer

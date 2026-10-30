@@ -1,0 +1,126 @@
+{
+  "observedDate": "2026-10-30",
+  "status": "deployment-submission-blocked-by-automatic-approval-review",
+  "deploymentStarted": false,
+  "userInstruction": "Proceed with the deployment.",
+  "entryPoint": "infra/bicep/main.bicep",
+  "parameterSource": "infra/bicep/environments/dev/main.dev.local.bicepparam; values not stored",
+  "validation": "Succeeded",
+  "reviewReason": "APIM/ACR deployment authorised, but full main deployment also has existing Cosmos/Insights Modify deltas not explicitly approved; shared-platform side effects require specific approval.",
+  "existingResourceUpdates": [
+    {
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": null,
+          "before": {
+            "schemaType": "WellDefined"
+          },
+          "children": null,
+          "path": "properties.analyticalStorageConfiguration",
+          "propertyChangeType": "Delete"
+        },
+        {
+          "after": null,
+          "before": "FirstPartyIdentity",
+          "children": null,
+          "path": "properties.defaultIdentity",
+          "propertyChangeType": "Delete"
+        },
+        {
+          "after": null,
+          "before": "High",
+          "children": null,
+          "path": "properties.defaultPriorityLevel",
+          "propertyChangeType": "Delete"
+        },
+        {
+          "after": null,
+          "before": true,
+          "children": null,
+          "path": "properties.enablePerRegionPerPartitionAutoscale",
+          "propertyChangeType": "Delete"
+        },
+        {
+          "after": null,
+          "before": false,
+          "children": null,
+          "path": "properties.enablePriorityBasedExecution",
+          "propertyChangeType": "Delete"
+        },
+        {
+          "after": null,
+          "before": false,
+          "children": null,
+          "path": "properties.perPartitionAutomaticFailoverEnabled",
+          "propertyChangeType": "Delete"
+        },
+        {
+          "after": null,
+          "before": "https://cosmos-adt-platform-dev.documents.azure.com:443/",
+          "children": null,
+          "path": "properties.sqlEndpoint",
+          "propertyChangeType": "Delete"
+        }
+      ],
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-adt-platform-dev"
+    },
+    {
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": {
+            "throughput": 400
+          },
+          "before": null,
+          "children": null,
+          "path": "properties.options",
+          "propertyChangeType": "Create"
+        },
+        {
+          "after": "australiaeast",
+          "before": null,
+          "children": null,
+          "path": "location",
+          "propertyChangeType": "Create"
+        },
+        {
+          "after": {
+            "environment": "dev",
+            "managedBy": "bicep",
+            "platform": "azure-reference-platform",
+            "purpose": "reference-project"
+          },
+          "before": null,
+          "children": null,
+          "path": "tags",
+          "propertyChangeType": "Create"
+        }
+      ],
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.DocumentDB/databaseAccounts/cosmos-adt-platform-dev/sqlDatabases/ReferenceProjects"
+    },
+    {
+      "changeType": "Modify",
+      "delta": [
+        {
+          "after": "Bluefield",
+          "before": null,
+          "children": null,
+          "path": "properties.Flow_Type",
+          "propertyChangeType": "Create"
+        },
+        {
+          "after": "rest",
+          "before": null,
+          "children": null,
+          "path": "properties.Request_Source",
+          "propertyChangeType": "Create"
+        }
+      ],
+      "resourceId": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Insights/components/appi-platform-dev"
+    }
+  ],
+  "newResourcesCreated": false,
+  "postRejectionReadCheck": "Neither APIM nor ACR exists in rg-platform-dev; no matching deployment execution returned.",
+  "note": "No workaround/retry or infrastructure source change performed. Explicit approval of existing-resource updates required before retry."
+}
