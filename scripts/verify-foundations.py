@@ -1,6 +1,7 @@
 """Check the main platform template and Development parameters against reviewed controls."""
 import argparse
 import json
+import uuid
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -35,6 +36,7 @@ def verify(template, parameters):
         "microsoft.insights/components",
         "microsoft.sql/servers",
         "microsoft.sql/servers/databases",
+        "microsoft.sql/servers/administrators",
         "microsoft.documentdb/databaseaccounts",
         "microsoft.documentdb/databaseaccounts/sqldatabases",
         "microsoft.servicebus/namespaces",
@@ -44,17 +46,36 @@ def verify(template, parameters):
     }
     types = [resource["type"].lower() for resource in resources]
     require(len(types) == len(expected) and set(types) == expected,
-            "Only the existing core resources plus one APIM, its policy and one ACR may be managed")
+            "Only core resources, the optional SQL Entra administrator, APIM/policy and ACR may be managed")
     values = parameters["parameters"]
     require(values["environment"]["value"] == "dev", "This parameter check is Development-only")
     require(values["platformResourceGroupName"]["value"] == "rg-platform-dev", "Unexpected resource group")
     require(values["appServicePlanSku"]["value"] == "B1", "Development must retain B1")
     by_type = {resource["type"].lower(): resource for resource in resources}
+    administrator = by_type["microsoft.sql/servers/administrators"]
+    require(administrator.get("condition") == "[not(empty(parameters('entraAdminGroupObjectId')))]",
+            "SQL administrator must stay disabled until a real group ID is supplied")
+    require(administrator["properties"] == {
+        "administratorType": "ActiveDirectory",
+        "login": "[parameters('entraAdminGroupName')]",
+        "sid": "[parameters('entraAdminGroupObjectId')]",
+        "tenantId": "[tenant().tenantId]",
+    }, "SQL administrator must be the supplied group in the current tenant; no extra auth changes")
+    group_id = values.get("sqlEntraAdminGroupObjectId", {}).get("value", "")
+    if group_id:
+        require(bool(uuid.UUID(group_id).int), "SQL group ID must be a nonzero real object ID")
+        require(bool(values.get("sqlEntraAdminGroupName", {}).get("value", "").strip()),
+                "SQL group display name must accompany its ID")
     gateway = by_type["microsoft.apimanagement/service"]
     require(gateway["sku"] == {"name": "Developer", "capacity": 1}, "APIM must be one Developer unit")
     require(gateway["identity"]["type"] == "SystemAssigned", "APIM needs its own identity")
     require(gateway["properties"]["virtualNetworkType"] == "None", "No unreviewed VNet change")
+    require(gateway["properties"].get("legacyPortalStatus") == "Disabled", "Legacy APIM portal must remain disabled")
     tls = gateway["properties"]["customProperties"]
+    require(tls.get("Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2", "").lower() == "false",
+            "Preserve the currently disabled HTTP/2 setting")
+    require(tls.get("Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168", "").lower() == "false",
+            "Preserve the disabled TripleDES setting")
     for side in ["", "Backend."]:
         for protocol in ["Tls10", "Tls11", "Ssl30"]:
             key = f"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.{side}Protocols.{protocol}"

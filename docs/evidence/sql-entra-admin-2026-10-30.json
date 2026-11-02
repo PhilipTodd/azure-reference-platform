@@ -1,0 +1,31 @@
+{
+  "serverSettingsUnchanged": true,
+  "firewallRulesUnchanged": true,
+  "entraAdministrator": [
+    {
+      "administratorType": "ActiveDirectory",
+      "azureAdOnlyAuthentication": null,
+      "id": "/subscriptions/9671ac36-9800-451a-b283-35ea87f8b419/resourceGroups/rg-platform-dev/providers/Microsoft.Sql/servers/sql-adt-platform-dev/administrators/ActiveDirectory",
+      "login": "sg-adt-platform-sql-admins-dev",
+      "name": "ActiveDirectory",
+      "resourceGroup": "rg-platform-dev",
+      "sid": "469d4226-c4a4-4cc1-8b99-58e1dfd595f7",
+      "tenantId": "f4fcd45c-104f-4dd3-b7bf-3475e83ce097",
+      "type": "Microsoft.Sql/servers"
+    }
+  ],
+  "entraOnlyAuthentication": false,
+  "loginVerification": {
+    "status": "Passed",
+    "database": "ReferenceProjectsDb",
+    "login": "philip.todd@ausdatatech.com.au",
+    "databaseUser": "dbo",
+    "isDatabaseOwner": 1,
+    "queryScope": "Connection/principal metadata only; no schema/data mutation"
+  },
+  "deployment": {
+    "correlationId": "27fe5fea-d0f5-49c9-96b8-8d25886d1a3f",
+    "name": "platform-sql-entra-admin-20261030-051009",
+    "state": "Succeeded"
+  }
+}

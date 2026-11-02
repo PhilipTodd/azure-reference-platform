@@ -34,7 +34,11 @@ resource gateway 'Microsoft.ApiManagement/service@2024-05-01' = {
     publisherName: publisherName
     publicNetworkAccess: 'Enabled'
     virtualNetworkType: 'None'
+    // Preserve the live disabled legacy portal during full-platform redeployments.
+    legacyPortalStatus: 'Disabled'
     customProperties: {
+      'Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2': 'False'
+      'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168': 'False'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11': 'false'
       'Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30': 'false'

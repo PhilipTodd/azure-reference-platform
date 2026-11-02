@@ -4,6 +4,8 @@ The [Development APIM/ACR additions](docs/development-foundations.md) extend the
 
 Shared Azure infrastructure used by the Aus Data Tech reference projects.
 
+Shared SQL Entra administration is prepared through the same main.bicep path with a [repeatable group bootstrap](docs/sql-entra-administration.md). It keeps SQL authentication and firewall settings separate from the administrator group and does not grant application runtime access.
+
 This repository provisions and manages the common Azure platform resources used by multiple reference applications. The goal is to demonstrate production-style Infrastructure as Code (IaC) while keeping Azure hosting costs low by sharing platform services across projects.
 
 The platform is deployed using Azure Bicep and Github Actions.

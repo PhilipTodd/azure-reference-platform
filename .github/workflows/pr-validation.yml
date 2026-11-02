@@ -14,6 +14,8 @@ on:
       - '.github/workflows/pr-validation.yml'
       - '.github/workflows/deploy-platform-dev.yml'
       - 'scripts/verify-foundations.py'
+      - 'scripts/Initialize-SqlEntraAdminGroup.ps1'
+      - 'scripts/tests/**'
 
 permissions:
   contents: read
@@ -65,3 +67,7 @@ jobs:
 
           python3 scripts/verify-foundations.py \
             "$RUNNER_TEMP/platform-main.json" "$RUNNER_TEMP/platform-main.parameters.json"
+
+      - name: Test SQL administrator bootstrap without Azure access
+        shell: pwsh
+        run: ./scripts/tests/Test-SqlEntraAdminGroup.ps1
